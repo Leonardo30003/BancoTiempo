@@ -1,0 +1,401 @@
+define({ "api": [
+  {
+    "type": "post",
+    "url": "/API/recarga/recargar",
+    "title": "recargar",
+    "group": "BNL_RESERVA",
+    "version": "3.2.9",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "idCompania",
+            "description": "<p>kradac entregará el id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "idAplicativo",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "cedula",
+            "description": "<p>Maximo 11 caracteres</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "idCliente",
+            "description": "<p>Este valor se obtiene en respuesta correcta del Res: verificar-cliente</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "canal",
+            "description": "<p>Canal donde se realiza la recarga</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "quienRecarga",
+            "description": "<p>Identificativo de la persona que realiza la recarga puede ser un entero o una cadena</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "fecha",
+            "description": "<p>Fecha y hora que se efectua la transaccion en su sistema FORMATO (2019-07-12 15:32:30)</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "double",
+            "optional": false,
+            "field": "recarga",
+            "description": "<p>12.56</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "observacion",
+            "description": "<p>Opcional Maximo 500 caracteres</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "idTransaccionPeticion",
+            "description": "<p>Opcional Si se envía debe ser unico por cada transaccion. Se utilizara para hacer un reverso en caso de ser necesario.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "checksum",
+            "description": "<p>(md5(cedula + md5(canal))</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>(sha256(fecha + md5(cedula))</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "json",
+            "optional": false,
+            "field": "json",
+            "description": "<p>{en: 1, m: 'Recarga realizado correctamente.'}</p>"
+          }
+        ],
+        "Execpcional_1": [
+          {
+            "group": "Execpcional_1",
+            "type": "json",
+            "optional": false,
+            "field": "json",
+            "description": "<p>{en: 'Entero menor a cero', m: 'Mensaje con la descripcion del error'}</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "Fujo normal de eventos.",
+          "type": "json"
+        },
+        {
+          "title": "Execpcional_1:",
+          "content": "Flujo alterno de evento.",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "json",
+            "optional": false,
+            "field": "json",
+            "description": "<p>{m: 'Mensaje identificativo del error'};</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "Los errores devuelve has error.",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "api/rapi_recarga.js",
+    "groupTitle": "BNL_RESERVA",
+    "name": "PostApiRecargaRecargar"
+  },
+  {
+    "type": "post",
+    "url": "/API/recarga/reversar",
+    "title": "reversar",
+    "group": "BNL_RESERVA",
+    "version": "3.2.9",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "idCompania",
+            "description": "<p>kradac entregará el id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "idAplicativo",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "double",
+            "optional": false,
+            "field": "recarga",
+            "description": "<p>mismo valor q se recargo</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "observacion",
+            "description": "<p>Maximo 500 caracteres</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "idTransaccionPeticion",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "checksum",
+            "description": "<p>md5(idTransaccionPeticion + md5(observacion))</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "json",
+            "optional": false,
+            "field": "json",
+            "description": "<p>{en: 1, m: 'Reverso realizado correctamente.'}</p>"
+          }
+        ],
+        "Execpcional_1": [
+          {
+            "group": "Execpcional_1",
+            "type": "json",
+            "optional": false,
+            "field": "json",
+            "description": "<p>{en: 'Entero menor a cero', m: 'Mensaje con la descripcion del error'}</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "Fujo normal de eventos.",
+          "type": "json"
+        },
+        {
+          "title": "Execpcional_1:",
+          "content": "Flujo alterno de evento.",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "json",
+            "optional": false,
+            "field": "json",
+            "description": "<p>{m: 'Mensaje identificativo del error'};</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "Los errores devuelve has error.",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "api/rapi_recarga.js",
+    "groupTitle": "BNL_RESERVA",
+    "name": "PostApiRecargaReversar"
+  },
+  {
+    "type": "post",
+    "url": "/API/recarga/verificar-cliente",
+    "title": "verificar cliente",
+    "group": "BNL_RESERVA",
+    "version": "3.2.9",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "idCompania",
+            "description": "<p>kradac entregará el id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "idAplicativo",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "cedula",
+            "description": "<p>Maximo 11 caracteres</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "canal",
+            "description": "<p>Canal donde se realiza la recarga</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "quienRecarga",
+            "description": "<p>Identificativo de la persona que realiza la recarga puede ser un entero o una cadena</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "fecha",
+            "description": "<p>Fecha y hora que se efectua la transaccion en su sistema FORMATO (2019-07-12 15:32:30)</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "observacion",
+            "description": "<p>Opcional Maximo 500 caracteres</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "checksum",
+            "description": "<p>(md5(cedula + md5(canal))</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>(sha256(fecha + md5(cedula))</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "json",
+            "optional": false,
+            "field": "json",
+            "description": "<p>{en: 1, m: 'Recarga realizado correctamente.'}</p>"
+          }
+        ],
+        "Execpcional_1": [
+          {
+            "group": "Execpcional_1",
+            "type": "json",
+            "optional": false,
+            "field": "json",
+            "description": "<p>{en: 'Entero menor a cero', m: 'Mensaje con la descripcion del error'}</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "Fujo normal de eventos.",
+          "type": "json"
+        },
+        {
+          "title": "Execpcional_1:",
+          "content": "Flujo alterno de evento.",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "json",
+            "optional": false,
+            "field": "json",
+            "description": "<p>{m: 'Mensaje identificativo del error'};</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "Los errores devuelve has error.",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "api/rapi_recarga.js",
+    "groupTitle": "BNL_RESERVA",
+    "name": "PostApiRecargaVerificarCliente"
+  }
+] });
