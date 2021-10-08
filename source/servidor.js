@@ -61,14 +61,14 @@ configuraciones.on(function (activar) {
                 parameterLimit: 50
             }));
             app.use(bodyParser.json());
-//            app.use(require('./r_a_adicional'));
-//            app.use(require('./r_a_espacios'));
-//            app.use(require('./r_a_accesos'));
-//            app.use(require('./r_a_ticket'));
-//            app.use(require('./r_a_lugar'));
-//            app.use(require('./r_a_lugar_equipo'));
-//            app.use(require('./r_c_login'));
-//            app.use(require('./r_a_login'));
+            app.use(require('./r_a_adicional'));
+            app.use(require('./r_a_espacios'));
+            app.use(require('./r_a_accesos'));
+            app.use(require('./r_a_ticket'));
+            app.use(require('./r_a_lugar'));
+            app.use(require('./r_a_lugar_equipo'));
+            app.use(require('./r_c_login'));
+            app.use(require('./r_a_login'));
             app.get('/', function (req, res) {
                 res.status(200).send({
                     EC: 'ECUADOR',
@@ -76,7 +76,7 @@ configuraciones.on(function (activar) {
                     IDENTIFICADOR: ID_APP,
                     VERSION: VERSION,
                     BY: 'kradac',
-                    PROJECT: 'Kparking UTPL',
+                    PROJECT: 'Banco del Tiempo',
                     ARCHITECT: ''
                 });
             });
