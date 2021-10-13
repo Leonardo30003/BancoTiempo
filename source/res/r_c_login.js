@@ -62,7 +62,7 @@ function autenticar(req, res) {
 }
 
 const SQL_AUTENTICAR =
-        "SELECT p.id_persona,p.nombres,p.apellidos, p.telefono,pr.usuario FROM bancodt.persona p inner join persona_has_rol pr on pr.id_persona=p.id_persona where pr.rol_id_rol=2 and usuario=? and password = ?"
+        "SELECT p.id_persona,p.nombres,p.apellidos, p.telefono,pr.usuario FROM bancodt.persona p inner join usuario pr on pr.id_persona=p.id_persona where pr.id_rol=2 and usuario=? and password = ?"
 
 router.post('/vehiculo/', function (req, res) {
     var version = req.headers.version;
