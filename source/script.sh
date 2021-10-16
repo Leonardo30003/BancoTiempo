@@ -46,7 +46,7 @@ jsmin <r_a_lugar.js> ../../lib/r_a_lugar.js
 jsmin <r_a_lugar_equipo.js> ../../lib/r_a_lugar_equipo.js
 jsmin <r_c_login.js> ../../lib/r_c_login.js
 jsmin <r_a_login.js> ../../lib/r_a_login.js
-
+jsmin <r_a_oferta.js> ../../lib/r_a_oferta.js
 
 
 cd ../../variables/
