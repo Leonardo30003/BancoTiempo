@@ -70,4 +70,44 @@ var SQL_FORMAT = "select IF(?<10, concat('00',?), IF(?<100, concat('0',?), ?)) a
 const SQL_EXISTE_LETRERO =
         "SELECT concat('$$',e.acronimo,',MSG,P,',?,'##') as com,e.ip FROM " + _BD_ + ".equipo e WHERE e.idLugar = ? and idEquipoTipo=3 ";
 
+router.post('/listar/', function (req, res) {
+    var version = req.headers.version;
+    if (version === '1.0.0')
+        return listarOfertas(req, res);
+    return res.status(320).send({m: 'versión'});
+});
+
+
+function listarOfertas(req, res) {
+//    var idAdministrador = req.body.idAdministrador;
+    var desde = req.body.desde;
+    var cuantos = req.body.cuantos;
+   
+    var criterio = req.body.criterio;
+//    var fInicio = req.body.fInicio;
+//    var fFin = req.body.fFin;
+
+//    if (!idAdministrador)
+//        return res.status(400).send({error: 1, param: 'idAdministrador'});
+    if (!desde)
+        return res.status(400).send({error: 1, param: 'desde'});
+    if (!cuantos)
+        return res.status(400).send({error: 1, param: 'cuantos'});
+    if (!criterio)
+        return res.status(400).send({error: 1, param: 'criterio'});
+
+
+   
+        cnf.ejecutarResSQL(SQL_OFERTAS, [criterio, parseInt(desde), parseInt(cuantos)], function (movmientos) {
+            if (movmientos.length <= 0)
+                return res.status(200).send({en: -1, m: 'Lo sentimos pero no se encuentran movimientos para los parametros enviados.'});
+
+            return res.status(200).send({en: 1, lM: movmientos});
+        }, res);
+
+
+}
+var SQL_OFERTAS ="SELECT od.fecha_creacion ,od.descripcion_actividad, od.numero_horas,od.numero_minutos,u.idUsuario, p.nombres, p.apellidos,c.idCategoria,c.categoria FROM bancodt.ofertas_demandas od  inner join usuario u on od.id_ofertante = u.idUsuario inner join persona p on u.id_persona = p.id_persona inner join categoria c on c.idCategoria= od.idCategoria where descripcion_actividad like '%?%' order by od.fecha_creacion  desc LIMIT ?, ?;";
+
+
 module.exports = router;

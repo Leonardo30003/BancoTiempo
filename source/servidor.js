@@ -107,7 +107,7 @@ configuraciones.on(function (activar) {
             }
 
             app.use('/adicional', require('./r_a_adicional'));
-            app.use('/espacios', require('./r_a_espacios'));
+            app.use('/oferta', require('./r_a_oferta'));
             app.use('/control', require('./r_a_accesos'));
             app.use('/ticket', require('./r_a_ticket'));
             app.use('/lugar', require('./r_a_lugar'));
