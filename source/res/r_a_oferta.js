@@ -89,7 +89,7 @@ function listarOfertas(req, res) {
 //    var fInicio = req.body.fInicio;
 //    var fFin = req.body.fFin;
     var where = ''
-    if (!idUsuario) 
+    if (idUsuario) 
         where = ' where od.id_ofertante= ' + idUsuario;
 
     if (!desde)
