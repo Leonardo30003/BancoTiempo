@@ -42,35 +42,31 @@ router.post('/registrar/', function (req, res) {
 });
 
 function registrarTicket(req, res) {
-    var idLugar = req.body.idLugar;
-    var codigo = req.body.codigo;
-    var numero = req.body.numero;
-    var placa = req.body.placa;
-    var estado = req.body.estado;
-    var fechaHoraIngreso = req.body.fechaHoraIngreso;
+    var numeroMinutos = req.body.numeroMinutos;
+    var descripcionActividad = req.body.descripcionActividad;
+    var idCategoria = req.body.numero;
+    var idUsuario = req.body.idUsuario;
 
-    if (!idLugar)
-        return res.status(400).send({en: -1, param: 'idLugar'});
-    if (!codigo)
-        return res.status(400).send({en: -1, param: 'codigo'});
-    if (!numero)
-        return res.status(400).send({en: -1, param: 'numero'});
-    if (!fechaHoraIngreso)
-        return res.status(400).send({en: -1, param: 'fechaHoraIngreso'});
 
-    cnf.ejecutarResSQL(SQL_EXISTE_LUGAR, [idLugar], function (lugar) {
-        if (lugar.length <= 0)
-            return res.status(200).send({en: -1, m: 'Lugar no registrado'});
-        cnf.ejecutarResSQL(SQL_INSERT_TICKET, [lugar[0]['idCompania'], idLugar, codigo, numero, placa, fechaHoraIngreso, estado], function (ticket) {
-            if (ticket['insertId'] <= 0)
-                return res.status(200).send({en: -1, m: 'Lo sentimos, por favor intenta de nuevo más tarde.'});
+    if (!numeroMinutos)
+        return res.status(400).send({en: -1, param: 'numeroMinutos'});
+    if (!descripcionActividad)
+        return res.status(400).send({en: -1, param: 'descripcionActividad'});
+    if (!idCategoria)
+        return res.status(400).send({en: -1, param: 'idCategoria'});
+    if (!idUsuario)
+        return res.status(400).send({en: -1, param: 'idUsuario'});
 
-            return res.status(200).send({en: 1, m: 'Registro realizado correctamente'});
-        }, res);
+
+    cnf.ejecutarResSQL(SQL_INSERT_TICKET, [numeroMinutos, descripcionActividad, idCategoria, idUsuario], function (ofertas_demandas) {
+        if (ofertas_demandas['insertId'] <= 0)
+            return res.status(200).send({en: -1, m: 'Lo sentimos, por favor intenta de nuevo más tarde.'});
+
+        return res.status(200).send({en: 1, m: 'Registro realizado correctamente'});
     }, res);
 }
 
-var SQL_INSERT_TICKET = "INSERT INTO " + _BD_ + ".ticket (idCompania, idLugar, codigo, numero, placa, fechaHoraIngreso, estado) VALUES (?, ?, ?, ?, ?, ?, ?);";
+var SQL_INSERT_TICKET = "INSERT INTO bancodt.ofertas_demandas (numero_minutos, descripcion_actividad, idCategoria, id_ofertante) VALUES (?, ?, ?, ?)";
 const SQL_EXISTE_LUGAR =
         "SELECT l.idCompania FROM " + _BD_ + ".lugar l WHERE l.idLugar = ? ;";
 /**
@@ -148,7 +144,7 @@ function actualizarTicket(req, res) {
 
 }
 
-var SQL_UPDATE_ADICIONAL = "UPDATE " + _BD_ + ".ticket SET fechaHoraSalida=?, fechaHoraPago=?,  estado=?, total=?, nombreDescuento=?, valorDescuento=?, usuarioId=?,comentario=?,  fecha_actualizo=now() WHERE codigo=?;";
+var SQL_UPDATE_ADICIONAL = "UPDATE " + _BD_ + ".ofertas_demandas SET fechaHoraSalida=?, fechaHoraPago=?,  estado=?, total=?, nombreDescuento=?, valorDescuento=?, usuarioId=?,comentario=?,  fecha_actualizo=now() WHERE codigo=?;";
 
 
 

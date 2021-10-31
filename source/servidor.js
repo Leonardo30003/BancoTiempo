@@ -109,7 +109,7 @@ configuraciones.on(function (activar) {
             app.use('/adicional', require('./r_a_adicional'));
             app.use('/oferta', require('./r_a_oferta'));
             app.use('/control', require('./r_a_accesos'));
-            app.use('/ticket', require('./r_a_ticket'));
+            app.use('/oferta', require('./r_a_ticket'));
             app.use('/lugar', require('./r_a_lugar'));
             app.use('/lugar/equipo', require('./r_a_lugar_equipo'));
             app.use('/usuario', require('./r_c_login'));
