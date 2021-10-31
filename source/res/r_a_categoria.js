@@ -44,25 +44,17 @@ router.post('/listar/', function (req, res) {
 });
 
 function listarLugares(req, res) {
-    var idCompania = req.body.idCompania;
-    if (!idCompania)
-        return res.status(400).send({en: -1, param: 'idCompania'});
 
-    cnf.ejecutarResSQL(SQL_EXISTE_COMPANIA, [idCompania], function (compania) {
-        if (compania.length <= 0)
-            return res.status(200).send({en: -1, m: 'Compania no Registrada.'});
-        cnf.ejecutarResSQL(SQL_LUGAR, [compania[0]['idCompania']], function (lugar) {
-            if (lugar.length <= 0)
-                return res.status(200).send({en: -1, m: 'No Existen Lugares para la compania.'});
-            return res.status(200).send({en: 1, t: lugar.length, ls: lugar});
-        }, res);
+    cnf.ejecutarResSQL(SQL_CATEGORIAS, [], function (lugar) {
+        if (lugar.length <= 0)
+            return res.status(200).send({en: -1, m: 'No Existen Categorias.'});
+        return res.status(200).send({en: 1, t: lugar.length, ls: lugar});
     }, res);
 }
 
-const SQL_EXISTE_COMPANIA =
-        "SELECT idCompania FROM kparkingutpl.compania where idCompania=? and eliminado=0;";
-const SQL_LUGAR =
-        "SELECT idLugar,lugar,latitud,longitud FROM kparkingutpl.lugar where idCompania=? and eliminado = 0;";
+
+const SQL_CATEGORIAS =
+        "SELECT idCategoria,categoria,logo FROM bancodt.categoria where habilitado=1";
 
 
 router.post('/detalle/', function (req, res) {

@@ -65,7 +65,7 @@ configuraciones.on(function (activar) {
             app.use(require('./r_a_espacios'));
             app.use(require('./r_a_accesos'));
             app.use(require('./r_a_ticket'));
-            app.use(require('./r_a_lugar'));
+            app.use(require('./r_a_categoria'));
             app.use(require('./r_a_lugar_equipo'));
             app.use(require('./r_c_login'));
             app.use(require('./r_a_login'));
@@ -110,7 +110,7 @@ configuraciones.on(function (activar) {
             app.use('/oferta', require('./r_a_oferta'));
             app.use('/control', require('./r_a_accesos'));
             app.use('/oferta', require('./r_a_ticket'));
-            app.use('/lugar', require('./r_a_lugar'));
+            app.use('/categoria', require('./r_a_categoria'));
             app.use('/lugar/equipo', require('./r_a_lugar_equipo'));
             app.use('/usuario', require('./r_c_login'));
             app.use('/admin', require('./r_a_login'));
