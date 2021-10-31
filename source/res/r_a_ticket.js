@@ -46,12 +46,15 @@ function registrarTicket(req, res) {
     var descripcionActividad = req.body.descripcionActividad;
     var idCategoria = req.body.idCategoria;
     var idUsuario = req.body.idUsuario;
+    var titulo = req.body.titulo;
 
 
     if (!numeroMinutos)
         return res.status(400).send({en: -1, param: 'numeroMinutos'});
     if (!descripcionActividad)
         return res.status(400).send({en: -1, param: 'descripcionActividad'});
+    if (!titulo)
+        return res.status(400).send({en: -1, param: 'titulo'});
     if (!idCategoria)
         return res.status(400).send({en: -1, param: 'idCategoria'});
     if (!idUsuario)
@@ -66,7 +69,7 @@ function registrarTicket(req, res) {
     }, res);
 }
 
-var SQL_INSERT_TICKET = "INSERT INTO bancodt.ofertas_demandas (numero_minutos, descripcion_actividad, idCategoria, id_ofertante) VALUES (?, ?, ?, ?)";
+var SQL_INSERT_TICKET = "INSERT INTO bancodt.ofertas_demandas (numero_minutos, descripcion_actividad, idCategoria, id_ofertante, titulo) VALUES (?, ?, ?, ?,?)";
 const SQL_EXISTE_LUGAR =
         "SELECT l.idCompania FROM " + _BD_ + ".lugar l WHERE l.idLugar = ? ;";
 /**
