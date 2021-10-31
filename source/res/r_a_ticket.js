@@ -61,7 +61,7 @@ function registrarTicket(req, res) {
         return res.status(400).send({en: -1, param: 'idUsuario'});
 
 
-    cnf.ejecutarResSQL(SQL_INSERT_TICKET, [numeroMinutos, descripcionActividad, idCategoria, idUsuario], function (ofertas_demandas) {
+    cnf.ejecutarResSQL(SQL_INSERT_TICKET, [numeroMinutos, descripcionActividad, idCategoria, idUsuario, titulo], function (ofertas_demandas) {
         if (ofertas_demandas['insertId'] <= 0)
             return res.status(200).send({en: -1, m: 'Lo sentimos, por favor intenta de nuevo más tarde.'});
 
