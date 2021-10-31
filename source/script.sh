@@ -39,7 +39,6 @@ cd ../res/
 pwd
 
 jsmin <r_a_adicional.js> ../../lib/r_a_adicional.js
-jsmin <r_a_espacios.js> ../../lib/r_a_espacios.js
 jsmin <r_a_accesos.js> ../../lib/r_a_accesos.js
 jsmin <r_a_ticket.js> ../../lib/r_a_ticket.js
 jsmin <r_a_lugar.js> ../../lib/r_a_lugar.js

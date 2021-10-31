@@ -44,7 +44,7 @@ router.post('/registrar/', function (req, res) {
 function registrarTicket(req, res) {
     var numeroMinutos = req.body.numeroMinutos;
     var descripcionActividad = req.body.descripcionActividad;
-    var idCategoria = req.body.numero;
+    var idCategoria = req.body.idCategoria;
     var idUsuario = req.body.idUsuario;
 
 
