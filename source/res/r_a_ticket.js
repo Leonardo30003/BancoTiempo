@@ -112,42 +112,35 @@ router.post('/editar/', function (req, res) {
 });
 
 function actualizarTicket(req, res) {
-    var idLugar = req.body.idLugar;
-    var codigo = req.body.codigo;
-    var fechaHoraSalida = req.body.fechaHoraSalida;
-    var fechaHoraPago = req.body.fechaHoraSalida;
-    var estado = req.body.estado;
-    var total = req.body.total;
-    var nombreDescuento = req.body.nombreDescuento;
-    var valorDescuento = req.body.valorDescuento;
-    var usuarioId = req.body.usuarioId;
-    var comentario = req.body.comentario;
+    var numeroMinutos = req.body.numeroMinutos;
+    var descripcionActividad = req.body.descripcionActividad;
+    var idCategoria = req.body.idCategoria;
+    var titulo = req.body.titulo;
+    var idOfertasDemandas = req.body.idOfertasDemandas;
 
-    if (!idLugar)
-        return res.status(400).send({en: -1, param: 'idLugar'});
-    if (!codigo)
-        return res.status(400).send({en: -1, param: 'codigo'});
-    if (!fechaHoraSalida)
-        return res.status(400).send({en: -1, param: 'fechaHoraSalida'});
-    if (!fechaHoraPago)
-        return res.status(400).send({en: -1, param: 'fechaHoraPago'});
 
-    cnf.ejecutarResSQL(SQL_EXISTE_LUGAR, [idLugar], function (lugar) {
-        if (lugar.length <= 0)
-            return res.status(200).send({en: -1, m: 'Lugar no registrado'});
-        cnf.ejecutarResSQL(SQL_UPDATE_ADICIONAL, [fechaHoraSalida, fechaHoraPago, estado, total, nombreDescuento, valorDescuento, usuarioId, comentario, codigo], function (movimiento) {
-            if (movimiento['affectedRows'] <= 0)
-                return res.status(200).send({en: -1, m: 'Lo sentimos, por favor intenta de nuevo más tarde.'});
+    if (!numeroMinutos)
+        return res.status(400).send({en: -1, param: 'numeroMinutos'});
+    if (!descripcionActividad)
+        return res.status(400).send({en: -1, param: 'descripcionActividad'});
+    if (!titulo)
+        return res.status(400).send({en: -1, param: 'titulo'});
+    if (!idCategoria)
+        return res.status(400).send({en: -1, param: 'idCategoria'});
 
-            return res.status(200).send({en: 1, m: 'Ticket actualizado correctamente.'});
 
-        }, res);
+    cnf.ejecutarResSQL(SQL_UPDATE_ADICIONAL, [numeroMinutos, titulo, descripcionActividad, idCategoria, idOfertasDemandas], function (movimiento) {
+        if (movimiento['affectedRows'] <= 0)
+            return res.status(200).send({en: -1, m: 'Lo sentimos, por favor intenta de nuevo más tarde.'});
+
+        return res.status(200).send({en: 1, m: 'Ticket actualizado correctamente.'});
+
     }, res);
 
 
 }
 
-var SQL_UPDATE_ADICIONAL = "UPDATE " + _BD_ + ".ofertas_demandas SET fechaHoraSalida=?, fechaHoraPago=?,  estado=?, total=?, nombreDescuento=?, valorDescuento=?, usuarioId=?,comentario=?,  fecha_actualizo=now() WHERE codigo=?;";
+var SQL_UPDATE_ADICIONAL = "UPDATE bancodt.ofertas_demandas SET numero_minutos=?, titulo=?, descripcion_actividad=?, idCategoria=? WHERE idOfertasDemandas=?;";
 
 
 

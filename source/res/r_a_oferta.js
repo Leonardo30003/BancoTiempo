@@ -89,7 +89,7 @@ function listarOfertas(req, res) {
 //    var fInicio = req.body.fInicio;
 //    var fFin = req.body.fFin;
     var where = ''
-    if (idUsuario) 
+    if (idUsuario)
         where = ' where od.id_ofertante= ' + idUsuario;
 
     if (!desde)
@@ -111,7 +111,7 @@ function listarOfertas(req, res) {
 
 
 }
-var SQL_OFERTAS = "SELECT od.fecha_creacion ,od.descripcion_actividad,od.titulo, od.numero_minutos,u.idUsuario,u.calificacion, p.nombres, p.apellidos,c.idCategoria,c.categoria FROM bancodt.ofertas_demandas od  inner join usuario u on od.id_ofertante = u.idUsuario inner join persona p on u.id_persona = p.id_persona inner join categoria c on c.idCategoria= od.idCategoria  order by od.fecha_creacion  desc LIMIT ?, ?;";
+var SQL_OFERTAS = "SELECT od.idOfertasDemandas, od.fecha_creacion ,od.descripcion_actividad,od.titulo, od.numero_minutos,u.idUsuario,u.calificacion, p.nombres, p.apellidos,c.idCategoria,c.categoria FROM bancodt.ofertas_demandas od  inner join usuario u on od.id_ofertante = u.idUsuario inner join persona p on u.id_persona = p.id_persona inner join categoria c on c.idCategoria= od.idCategoria  order by od.fecha_creacion  desc LIMIT ?, ?;";
 
 
 module.exports = router;
