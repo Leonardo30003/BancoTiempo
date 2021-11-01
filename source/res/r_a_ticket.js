@@ -127,13 +127,15 @@ function actualizarTicket(req, res) {
         return res.status(400).send({en: -1, param: 'titulo'});
     if (!idCategoria)
         return res.status(400).send({en: -1, param: 'idCategoria'});
+    if (!idOfertasDemandas)
+        return res.status(400).send({en: -1, param: 'idOfertasDemandas'});
 
 
     cnf.ejecutarResSQL(SQL_UPDATE_ADICIONAL, [numeroMinutos, titulo, descripcionActividad, idCategoria, idOfertasDemandas], function (movimiento) {
         if (movimiento['affectedRows'] <= 0)
             return res.status(200).send({en: -1, m: 'Lo sentimos, por favor intenta de nuevo más tarde.'});
 
-        return res.status(200).send({en: 1, m: 'Ticket actualizado correctamente.'});
+        return res.status(200).send({en: 1, m: 'Oferta actualizada correctamente.'});
 
     }, res);
 
