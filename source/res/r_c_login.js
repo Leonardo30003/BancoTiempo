@@ -125,7 +125,7 @@ function tranferir(req, res) {
 
 
 
-    cnf.ejecutarResSQL(SQL_BUSCAR_USUAURIO, [monto, idUsuarioPaga], function (usuarios) {
+    cnf.ejecutarResSQL(SQL_VALIIDAR_SALDO, [monto, idUsuarioPaga], function (usuarios) {
         if (usuarios.length <= 0)
             return res.status(200).send({en: -1, m: 'Número de horas insuficientes'});
         cnf.ejecutarResSQL(SQL_insertar_transaccion, [monto, detalle, idUsuarioPaga, idUsuarioRecibe, valoracion], function (ofertas_demandas) {
@@ -137,7 +137,7 @@ function tranferir(req, res) {
     }, res);
 }
 
-const SQL_BUSCAR_USUAURIO =
+const SQL_VALIIDAR_SALDO =
         "SELECT idUsuario FROM bancodt.usuario where tiempo >=? and idUsuario =?;"
 
 const SQL_insertar_transaccion =
