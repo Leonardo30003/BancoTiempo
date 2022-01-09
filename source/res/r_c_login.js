@@ -132,7 +132,7 @@ function tranferir(req, res) {
             if (ofertas_demandas['insertId'] <= 0)
                 return res.status(200).send({en: -1, m: 'Lo sentimos, por favor intenta de nuevo más tarde.'});
 
-            return res.status(200).send({en: 1, m: 'Registro realizado correctamente'});
+            return res.status(200).send({en: 1, m: 'Pago realizado correctamente'});
         }, res);
     }, res);
 }
