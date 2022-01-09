@@ -144,4 +144,39 @@ const SQL_insertar_transaccion =
         "INSERT INTO bancodt.transacciones_tiempo (numero_horas, descripcion_actividad, id_ofertante, id_demandante, valoracion) VALUES (?, ?, ?, ?, ?);";
 
 
+
+
+router.post('/movimientos/', function (req, res) {
+    var version = req.headers.version;
+    if (version === '1.0.0')
+        return movimientos(req, res);
+    return res.status(320).send({m: 'versión'});
+});
+
+
+function movimientos(req, res) {
+//    var idAdministrador = req.body.idAdministrador;
+    var desde = req.body.desde;
+    var cuantos = req.body.cuantos;
+    var idUsuario = req.body.idUsuario;
+
+    if (!desde)
+        return res.status(400).send({error: 1, param: 'desde'});
+    if (!cuantos)
+        return res.status(400).send({error: 1, param: 'cuantos'});
+    if (!idUsuario)
+        return res.status(400).send({error: 1, param: 'idUsuario'});
+    
+    var SQL_OFERTAS = "SELECT if(id_demandante=?,'1','0') as tipo,tt.id_transaccion,tt.numero_horas,tt.fechaRegistro,tt.descripcion_actividad,p.nombres,p.apellidos,pp.nombres as nombres2, pp.apellidos as apellidos2 FROM bancodt.transacciones_tiempo tt inner join usuario u on tt.id_demandante=u.idUsuario inner join persona p on p.id_persona= u.id_persona inner join usuario uu on tt.id_ofertante=uu.idUsuario inner join persona pp on pp.id_persona= uu.id_persona where tt.id_ofertante=? or tt.id_demandante=? order by od.fecha_creacion  desc LIMIT ?, ?;";
+
+
+    cnf.ejecutarResSQL(SQL_OFERTAS, [idUsuario,idUsuario,idUsuario,parseInt(desde), parseInt(cuantos)], function (movmientos) {
+        if (movmientos.length <= 0)
+            return res.status(200).send({en: -1, m: 'Lo sentimos pero no se encuentran movimientos para los parametros enviados.'});
+
+        return res.status(200).send({en: 1, lM: movmientos});
+    }, res);
+
+
+}
 module.exports = router;
