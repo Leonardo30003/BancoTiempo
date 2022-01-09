@@ -84,14 +84,14 @@ function buscarUsuario(req, res) {
     
 
 
-    cnf.ejecutarResSQL(SQL_AUTENTICAR, [celular, idUsuario], function (usuarios) {
+    cnf.ejecutarResSQL(SQL_BUSCAR_USUAURIO, [celular, idUsuario], function (usuarios) {
         if (usuarios.length <= 0)
             return res.status(200).send({en: -1, m: ''});
         return res.status(200).send({en: 1, usuario: usuarios[0]});
     }, res);
 }
 
-const SQL_AUTENTICAR =
+const SQL_BUSCAR_USUAURIO =
         "SELECT p.id_persona,p.nombres,p.apellidos, p.telefono,pr.usuario,pr.idUsuario FROM bancodt.persona p inner join usuario pr on pr.id_persona=p.id_persona where pr.id_rol=2 and pr.celular=? and pr.idUsuario <> ?"
 
 
