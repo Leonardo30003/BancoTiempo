@@ -78,15 +78,15 @@ function buscarUsuario(req, res) {
 
     if (!celular)
         return res.status(400).send({error: 1, param: 'usuario'});
-    
+
     if (!idUsuario)
         return res.status(400).send({error: 1, param: 'idUsuario'});
-    
+
 
 
     cnf.ejecutarResSQL(SQL_BUSCAR_USUAURIO, [celular, idUsuario], function (usuarios) {
         if (usuarios.length <= 0)
-            return res.status(200).send({en: -1, m: ''});
+            return res.status(200).send({en: -1, m: 'Número de celular no registrado'});
         return res.status(200).send({en: 1, usuario: usuarios[0]});
     }, res);
 }
@@ -94,6 +94,54 @@ function buscarUsuario(req, res) {
 const SQL_BUSCAR_USUAURIO =
         "SELECT p.id_persona,p.nombres,p.apellidos, p.telefono,pr.usuario,pr.idUsuario FROM bancodt.persona p inner join usuario pr on pr.id_persona=p.id_persona where pr.id_rol=2 and p.telefono=? and pr.idUsuario <> ?"
 
+
+router.post('/transferir/', function (req, res) {
+    var version = req.headers.version;
+    if (version === '1.0.0')
+        return tranferir(req, res);
+    return res.status(320).send({m: MENSAJE_DEPRECATE});
+});
+
+function tranferir(req, res) {
+    var idUsuarioPaga = req.body.idUsuarioPaga;
+    var idUsuarioRecibe = req.body.idUsuarioRecibe;
+    var detalle = req.body.detalle;
+    var valoracion = req.body.valoracion;
+    var monto = req.body.monto;
+
+
+    if (!idUsuarioPaga)
+        return res.status(400).send({error: 1, param: 'idUsuarioPaga'});
+
+    if (!idUsuarioRecibe)
+        return res.status(400).send({error: 1, param: 'idUsuarioRecibe'});
+
+    if (!monto)
+        return res.status(400).send({error: 1, param: 'monto'});
+    if (!detalle)
+        return res.status(400).send({error: 1, param: 'detalle'});
+    if (!valoracion)
+        return res.status(400).send({error: 1, param: 'valoracion'});
+
+
+
+    cnf.ejecutarResSQL(SQL_BUSCAR_USUAURIO, [monto, idUsuarioPaga], function (usuarios) {
+        if (usuarios.length <= 0)
+            return res.status(200).send({en: -1, m: 'Número de horas insuficientes'});
+        cnf.ejecutarResSQL(SQL_insertar_transaccion, [monto, detalle, idUsuarioPaga, idUsuarioRecibe, valoracion], function (ofertas_demandas) {
+            if (ofertas_demandas['insertId'] <= 0)
+                return res.status(200).send({en: -1, m: 'Lo sentimos, por favor intenta de nuevo más tarde.'});
+
+            return res.status(200).send({en: 1, m: 'Registro realizado correctamente'});
+        }, res);
+    }, res);
+}
+
+const SQL_BUSCAR_USUAURIO =
+        "SELECT idUsuario FROM bancodt.usuario where tiempo >=? and idUsuario =?;"
+
+const SQL_insertar_transaccion =
+        "INSERT INTO bancodt.transacciones_tiempo (numero_horas, descripcion_actividad, id_ofertante, id_demandante, valoracion) VALUES (?, ?, ?, ?, ?);";
 
 
 module.exports = router;
