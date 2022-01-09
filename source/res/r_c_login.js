@@ -167,7 +167,7 @@ function movimientos(req, res) {
     if (!idUsuario)
         return res.status(400).send({error: 1, param: 'idUsuario'});
     
-    var SQL_OFERTAS = "SELECT if(id_demandante=?,'1','0') as tipo,tt.id_transaccion,tt.numero_horas,tt.fechaRegistro,tt.descripcion_actividad,p.nombres,p.apellidos,pp.nombres as nombres2, pp.apellidos as apellidos2 FROM bancodt.transacciones_tiempo tt inner join usuario u on tt.id_demandante=u.idUsuario inner join persona p on p.id_persona= u.id_persona inner join usuario uu on tt.id_ofertante=uu.idUsuario inner join persona pp on pp.id_persona= uu.id_persona where tt.id_ofertante=? or tt.id_demandante=? order by od.fecha_creacion  desc LIMIT ?, ?;";
+    var SQL_OFERTAS = "SELECT if(id_demandante=?,'1','0') as tipo,tt.id_transaccion,tt.numero_horas,tt.fechaRegistro,tt.descripcion_actividad,p.nombres,p.apellidos,pp.nombres as nombres2, pp.apellidos as apellidos2 FROM bancodt.transacciones_tiempo tt inner join usuario u on tt.id_demandante=u.idUsuario inner join persona p on p.id_persona= u.id_persona inner join usuario uu on tt.id_ofertante=uu.idUsuario inner join persona pp on pp.id_persona= uu.id_persona where tt.id_ofertante=? or tt.id_demandante=? order by tt.fechaRegistro  desc LIMIT ?, ?;";
 
 
     cnf.ejecutarResSQL(SQL_OFERTAS, [idUsuario,idUsuario,idUsuario,parseInt(desde), parseInt(cuantos)], function (movmientos) {
