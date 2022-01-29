@@ -199,7 +199,7 @@ function buscarUsuario(req, res) {
     cnf.ejecutarResSQL(SQL_BUSCAR_USUARIOS, [idUsuario], function (usuarios) {
         if (usuarios.length <= 0)
             return res.status(200).send({en: -1, m: 'No existen miembres registrados '});
-        return res.status(200).send({en: 1, usuarios: usuarios[0]});
+        return res.status(200).send({en: 1, miembros: usuarios});
     }, res);
 }
 
