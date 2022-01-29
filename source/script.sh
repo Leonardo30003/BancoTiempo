@@ -38,11 +38,8 @@ jsmin <emit_compras.js> ../../lib/emit_compras.js
 cd ../res/
 pwd
 
-jsmin <r_a_adicional.js> ../../lib/r_a_adicional.js
-jsmin <r_a_accesos.js> ../../lib/r_a_accesos.js
 jsmin <r_a_ticket.js> ../../lib/r_a_ticket.js
 jsmin <r_a_categoria.js> ../../lib/r_a_categoria.js
-jsmin <r_a_lugar_equipo.js> ../../lib/r_a_lugar_equipo.js
 jsmin <r_c_login.js> ../../lib/r_c_login.js
 jsmin <r_a_login.js> ../../lib/r_a_login.js
 jsmin <r_a_oferta.js> ../../lib/r_a_oferta.js

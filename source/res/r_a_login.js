@@ -8,7 +8,7 @@ var router = require('express').Router();
 /**
  * @api {post} /c/login/autenticar autenticar
  * @apiGroup C>LOGIN
- * @apiVersion 3.1.1
+ * @apiVersion 3.1.1 
  * 
  * @apiParam {int} idAplicativo
  * @apiParam {String} usuario sera el correo electronico o el celular con el que se registro

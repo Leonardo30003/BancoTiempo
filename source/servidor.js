@@ -61,12 +61,9 @@ configuraciones.on(function (activar) {
                 parameterLimit: 50
             }));
             app.use(bodyParser.json());
-            app.use(require('./r_a_adicional'));
             app.use(require('./r_a_espacios'));
-            app.use(require('./r_a_accesos'));
             app.use(require('./r_a_ticket'));
             app.use(require('./r_a_categoria'));
-            app.use(require('./r_a_lugar_equipo'));
             app.use(require('./r_c_login'));
             app.use(require('./r_a_login'));
             app.get('/', function (req, res) {
@@ -106,27 +103,13 @@ configuraciones.on(function (activar) {
                 }));
             }
 
-            app.use('/adicional', require('./r_a_adicional'));
             app.use('/oferta', require('./r_a_oferta'));
-            app.use('/control', require('./r_a_accesos'));
             app.use('/oferta', require('./r_a_ticket'));
             app.use('/categoria', require('./r_a_categoria'));
-            app.use('/lugar/equipo', require('./r_a_lugar_equipo'));
             app.use('/usuario', require('./r_c_login'));
             app.use('/admin', require('./r_a_login'));
             
-//            global.EMIT = require('socket.io')(http, {'pingInterval': 50000000, 'pingTimeout': 50000000});
-//
-//            EMIT.on('connection', function (socket) {
-//                console.log('Nnevo cliente conectado');
-////                listener_autenticar.on(socket);
-////                listener_server.on(socket);
-//                //TERMINACION CONEXION CON SERVICDOR NODE JS
-//                socket.on('disconnect', function () {
-//                    console.log('cliente desconectado');
-//                });
-//
-//            });
+
 
 
         }, 0); //Se retarla el levantado del servidor durante dos segundos para evitar bloqueos en el servidor.
