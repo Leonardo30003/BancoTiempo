@@ -196,7 +196,7 @@ function buscarUsuario(req, res) {
     if (!idUsuario)
         return res.status(400).send({error: 1, param: 'idUsuario'});
 
-    cnf.ejecutarResSQL(SQL_BUSCAR_USUARIOS, [celular, idUsuario], function (usuarios) {
+    cnf.ejecutarResSQL(SQL_BUSCAR_USUARIOS, [idUsuario], function (usuarios) {
         if (usuarios.length <= 0)
             return res.status(200).send({en: -1, m: 'No existen miembres registrados '});
         return res.status(200).send({en: 1, usuarios: usuarios[0]});
