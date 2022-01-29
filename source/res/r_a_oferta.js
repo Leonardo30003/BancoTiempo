@@ -31,7 +31,7 @@ function listarOfertas(req, res) {
 
 
 
-    cnf.ejecutarResSQL(SQL_OFERTAS, [parseInt(desde), parseInt(cuantos)], function (movmientos) {
+    cnf.ejecutarResSQL(SQL_OFERTAS, [idUsuario,parseInt(desde), parseInt(cuantos)], function (movmientos) {
         if (movmientos.length <= 0)
             return res.status(200).send({en: -1, m: 'Lo sentimos pero no se encuentran ofertas registradas'});
 
