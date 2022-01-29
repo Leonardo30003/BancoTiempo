@@ -204,6 +204,6 @@ function buscarUsuario(req, res) {
 }
 
 const SQL_BUSCAR_USUARIOS =
-        "SELECT u.idUsuario,p.nombres,p.apellidos,p.email,p.telefono,u.usuario,u.calificacion,u.tiempo FROMbancodt.persona p    INNER JOINbancodt.usuario u ON u.id_persona = p.id_persona WHEREu.id_rol = 2 AND u.idUsuario <> ? AND idUsuario <> 1"
+        "SELECT u.idUsuario,p.nombres,p.apellidos,p.email,p.telefono,u.usuario,u.calificacion,u.tiempo FROM bancodt.persona p INNER JOIN bancodt.usuario u ON u.id_persona = p.id_persona WHERE u.id_rol = 2 AND u.idUsuario <> ? AND idUsuario <> 1"
 
 module.exports = router;
