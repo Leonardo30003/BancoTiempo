@@ -70,8 +70,7 @@ function registrarTicket(req, res) {
 }
 
 var SQL_INSERT_TICKET = "INSERT INTO bancodt.ofertas_demandas (horas, descripcion_actividad, idCategoria, id_ofertante, titulo) VALUES (?, ?, ?, ?,?)";
-const SQL_EXISTE_LUGAR =
-        "SELECT l.idCompania FROM " + _BD_ + ".lugar l WHERE l.idLugar = ? ;";
+
 /**
  * @api {post} /a/movimiento/editar editar
  * @apiGroup A>ADICIONAL
