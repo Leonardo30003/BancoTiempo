@@ -24,7 +24,7 @@ function listarOfertas(req, res) {
         return res.status(400).send({error: 1, param: 'desde'});
     if (!cuantos)
         return res.status(400).send({error: 1, param: 'cuantos'});
-    var filtro="";
+    var filtro="and od.estado=1";
     if (misOfertas && misOfertas==1)
         filtro = "and u.idUsuario= "+idUsuario;
 
