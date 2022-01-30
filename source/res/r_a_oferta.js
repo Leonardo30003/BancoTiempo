@@ -27,7 +27,7 @@ function listarOfertas(req, res) {
         return res.status(400).send({error: 1, param: 'cuantos'});
 //    if (!criterio)
 //        return res.status(400).send({error: 1, param: 'criterio'});
-    var SQL_OFERTAS = "SELECT if((select count(*) from bancodt.favorito where idOfertaDemanda=od.idOfertasDemandas and idUsuario=? ) >0,1,0) as isFavorito, if(u.idUsuario=?,0,1) as pagar, od.idOfertasDemandas,od.fecha_creacion ,od.descripcion_actividad,od.titulo,u.idUsuario,u.calificacion, p.nombres, p.apellidos,c.idCategoria,c.categoria,p.email,p.imagen FROM bancodt.ofertas_demandas od  inner join usuario u on od.id_ofertante = u.idUsuario inner join persona p on u.id_persona = p.id_persona inner join categoria c on c.idCategoria= od.idCategoria left join favorito f on f.idOfertaDemanda= od.idOfertasDemandas order by isFavorito desc,od.fecha_creacion  desc LIMIT ?, ?;";
+    var SQL_OFERTAS = "SELECT if((select count(*) from bancodt.favorito where idOfertaDemanda=od.idOfertasDemandas and idUsuario=? and estado=1 ) >0,1,0) as isFavorito, if(u.idUsuario=?,0,1) as pagar, od.idOfertasDemandas,od.fecha_creacion ,od.descripcion_actividad,od.titulo,u.idUsuario,u.calificacion, p.nombres, p.apellidos,c.idCategoria,c.categoria,p.email,p.imagen FROM bancodt.ofertas_demandas od  inner join usuario u on od.id_ofertante = u.idUsuario inner join persona p on u.id_persona = p.id_persona inner join categoria c on c.idCategoria= od.idCategoria left join favorito f on f.idOfertaDemanda= od.idOfertasDemandas where od.tipo=1 order by isFavorito desc,od.fecha_creacion  desc LIMIT ?, ?;";
 
 
 
@@ -50,6 +50,7 @@ router.post('/reg-favorito/', function (req, res) {
 function registrarFavorito(req, res) {
     var idOfertaDemanda = req.body.idOfertaDemanda;
     var idUsuario = req.body.idUsuario;
+    var estado = req.body.estado;
 
 
 
@@ -57,9 +58,11 @@ function registrarFavorito(req, res) {
         return res.status(400).send({en: -1, param: 'idOfertaDemanda'});
     if (!idUsuario)
         return res.status(400).send({en: -1, param: 'idUsuario'});
+    if (!estado)
+        return res.status(400).send({en: -1, param: 'estado'});
 
 
-    cnf.ejecutarResSQL(SQL_INSERT_TICKET, [horas, descripcionActividad, idCategoria, idUsuario, titulo], function (ofertas_demandas) {
+    cnf.ejecutarResSQL(SQL_INSERT_TICKET, [idUsuario,idOfertaDemanda,estado,estado ], function (ofertas_demandas) {
         if (ofertas_demandas['insertId'] <= 0)
             return res.status(200).send({en: -1, m: 'Lo sentimos, por favor intenta de nuevo más tarde.'});
 
@@ -67,7 +70,7 @@ function registrarFavorito(req, res) {
     }, res);
 }
 
-var SQL_INSERT_TICKET = "INSERT INTO bancodt.ofertas_demandas (horas, descripcion_actividad, idCategoria, id_ofertante, titulo) VALUES (?, ?, ?, ?,?)";
+var SQL_INSERT_TICKET = "INSERT INTO bancodt.favorito (idUsuario, idOfertaDemanda, estado) VALUES(?, ?, ?) ON DUPLICATE KEY UPDATE estado=?";
 
 
 module.exports = router;
