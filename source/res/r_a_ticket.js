@@ -42,15 +42,11 @@ router.post('/registrar/', function (req, res) {
 });
 
 function registrarTicket(req, res) {
-    var horas = req.body.horas;
     var descripcionActividad = req.body.descripcionActividad;
     var idCategoria = req.body.idCategoria;
     var idUsuario = req.body.idUsuario;
     var titulo = req.body.titulo;
 
-
-    if (!horas)
-        return res.status(400).send({en: -1, param: 'horas'});
     if (!descripcionActividad)
         return res.status(400).send({en: -1, param: 'descripcionActividad'});
     if (!titulo)
@@ -59,9 +55,9 @@ function registrarTicket(req, res) {
         return res.status(400).send({en: -1, param: 'idCategoria'});
     if (!idUsuario)
         return res.status(400).send({en: -1, param: 'idUsuario'});
+    
 
-
-    cnf.ejecutarResSQL(SQL_INSERT_TICKET, [horas, descripcionActividad, idCategoria, idUsuario, titulo], function (ofertas_demandas) {
+    cnf.ejecutarResSQL(SQL_INSERT_TICKET, [descripcionActividad, idCategoria, idUsuario, titulo], function (ofertas_demandas) {
         if (ofertas_demandas['insertId'] <= 0)
             return res.status(200).send({en: -1, m: 'Lo sentimos, por favor intenta de nuevo más tarde.'});
 
@@ -69,7 +65,7 @@ function registrarTicket(req, res) {
     }, res);
 }
 
-var SQL_INSERT_TICKET = "INSERT INTO bancodt.ofertas_demandas (horas, descripcion_actividad, idCategoria, id_ofertante, titulo) VALUES (?, ?, ?, ?,?)";
+var SQL_INSERT_TICKET = "INSERT INTO bancodt.ofertas_demandas ( descripcion_actividad, idCategoria, id_ofertante, titulo,tipo) VALUES ( ?, ?, ?,?,1)";
 
 /**
  * @api {post} /a/movimiento/editar editar
@@ -111,15 +107,14 @@ router.post('/editar/', function (req, res) {
 });
 
 function actualizarTicket(req, res) {
-    var horas = req.body.horas;
     var descripcionActividad = req.body.descripcionActividad;
     var idCategoria = req.body.idCategoria;
     var titulo = req.body.titulo;
     var idOfertasDemandas = req.body.idOfertasDemandas;
+    var estado = req.body.estado;
 
 
-    if (!horas)
-        return res.status(400).send({en: -1, param: 'horas'});
+   
     if (!descripcionActividad)
         return res.status(400).send({en: -1, param: 'descripcionActividad'});
     if (!titulo)
@@ -128,9 +123,11 @@ function actualizarTicket(req, res) {
         return res.status(400).send({en: -1, param: 'idCategoria'});
     if (!idOfertasDemandas)
         return res.status(400).send({en: -1, param: 'idOfertasDemandas'});
+    if (!estado)
+        return res.status(400).send({en: -1, param: 'estado'});
 
 
-    cnf.ejecutarResSQL(SQL_UPDATE_ADICIONAL, [horas, titulo, descripcionActividad, idCategoria, idOfertasDemandas], function (movimiento) {
+    cnf.ejecutarResSQL(SQL_UPDATE_ADICIONAL, [ titulo, descripcionActividad, idCategoria,estado, idOfertasDemandas], function (movimiento) {
         if (movimiento['affectedRows'] <= 0)
             return res.status(200).send({en: -1, m: 'Lo sentimos, por favor intenta de nuevo más tarde.'});
 
@@ -141,7 +138,7 @@ function actualizarTicket(req, res) {
 
 }
 
-var SQL_UPDATE_ADICIONAL = "UPDATE bancodt.ofertas_demandas SET horas=?, titulo=?, descripcion_actividad=?, idCategoria=? WHERE idOfertasDemandas=?;";
+var SQL_UPDATE_ADICIONAL = "UPDATE bancodt.ofertas_demandas SET titulo=?, descripcion_actividad=?, idCategoria=?, estado=? WHERE idOfertasDemandas=?;";
 
 
 
