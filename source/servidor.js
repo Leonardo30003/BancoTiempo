@@ -66,6 +66,7 @@ configuraciones.on(function (activar) {
             app.use(require('./r_a_categoria'));
             app.use(require('./r_c_login'));
             app.use(require('./r_a_login'));
+            app.use(require('./r_a_demanda'));
             app.get('/', function (req, res) {
                 res.status(200).send({
                     EC: 'ECUADOR',
@@ -108,6 +109,7 @@ configuraciones.on(function (activar) {
             app.use('/categoria', require('./r_a_categoria'));
             app.use('/usuario', require('./r_c_login'));
             app.use('/admin', require('./r_a_login'));
+            app.use('/demanda', require('./r_a_demanda'));
             
 
 

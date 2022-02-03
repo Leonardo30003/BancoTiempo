@@ -43,6 +43,7 @@ jsmin <r_a_categoria.js> ../../lib/r_a_categoria.js
 jsmin <r_c_login.js> ../../lib/r_c_login.js
 jsmin <r_a_login.js> ../../lib/r_a_login.js
 jsmin <r_a_oferta.js> ../../lib/r_a_oferta.js
+jsmin <r_a_demanda.js> ../../lib/r_a_demanda.js
 
 
 cd ../../variables/
