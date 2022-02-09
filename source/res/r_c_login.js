@@ -62,7 +62,7 @@ function autenticar(req, res) {
 }
 
 const SQL_AUTENTICAR =
-        "SELECT (select count(idOfertasDemandas) from ofertas_demandas where id_ofertante = 22) as num_publicaciones,p.id_persona,p.nombres,p.apellidos, p.telefono,pr.usuario,pr.idUsuario,pr.tiempo,p.direccion,p.email,p.imagen,pr.calificacion FROM bancodt.persona p inner join usuario pr on pr.id_persona=p.id_persona where pr.id_rol=2 and usuario=? and password = ?"
+        "SELECT (select count(idOfertasDemandas) from ofertas_demandas where id_ofertante = pr.idUsuario) as num_publicaciones,p.id_persona,p.nombres,p.apellidos, p.telefono,pr.usuario,pr.idUsuario,pr.tiempo,p.direccion,p.email,p.imagen,pr.calificacion FROM bancodt.persona p inner join usuario pr on pr.id_persona=p.id_persona where pr.id_rol=2 and usuario=? and password = ?"
 
 router.post('/usuariobycelular/', function (req, res) {
     var version = req.headers.version;
