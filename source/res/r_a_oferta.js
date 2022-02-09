@@ -29,7 +29,7 @@ function listarOfertas(req, res) {
         filtro = "and u.idUsuario= "+idUsuario;
 
 
-    var SQL_OFERTAS = "SELECT if((select count(*) from bancodt.favorito where idOfertaDemanda=od.idOfertasDemandas and idUsuario=? and estado=1 ) >0,1,0) as isFavorito, if(u.idUsuario=?,0,1) as pagar, od.idOfertasDemandas,od.fecha_creacion ,od.descripcion_actividad,od.titulo,u.idUsuario,u.calificacion, p.nombres, p.apellidos,c.idCategoria,c.categoria,p.email,p.imagen,p.telefono,od.estado FROM bancodt.ofertas_demandas od  inner join usuario u on od.id_ofertante = u.idUsuario inner join persona p on u.id_persona = p.id_persona inner join categoria c on c.idCategoria= od.idCategoria  where od.tipo=1 "+filtro+" order by isFavorito desc,od.fecha_creacion  desc LIMIT ?, ?;";
+    var SQL_OFERTAS = "SELECT if((select count(*) from bancodt.favorito where idOfertaDemanda=od.idOfertasDemandas and idUsuario=? and estado=1 ) >0,1,0) as isFavorito,(select count(idOfertaDemanda) from favorito where idOfertaDemanda =od.idOfertasDemandas and estado=1) as numPostularon, if(u.idUsuario=?,0,1) as pagar, od.idOfertasDemandas,od.fecha_creacion ,od.descripcion_actividad,od.titulo,u.idUsuario,u.calificacion, p.nombres, p.apellidos,c.idCategoria,c.categoria,p.email,p.imagen,p.telefono,od.estado FROM bancodt.ofertas_demandas od  inner join usuario u on od.id_ofertante = u.idUsuario inner join persona p on u.id_persona = p.id_persona inner join categoria c on c.idCategoria= od.idCategoria  where od.tipo=1 "+filtro+" order by isFavorito desc,od.fecha_creacion  desc LIMIT ?, ?;";
 
 
 
@@ -74,5 +74,33 @@ function registrarFavorito(req, res) {
 
 var SQL_INSERT_TICKET = "INSERT INTO bancodt.favorito (idUsuario, idOfertaDemanda, estado) VALUES(?, ?, ?) ON DUPLICATE KEY UPDATE estado=?";
 
+router.post('/listar-aplicaron/', function (req, res) {
+    var version = req.headers.version;
+    if (version === '1.0.0')
+        return listarAplicaron(req, res);
+    return res.status(320).send({m: 'versión'});
+});
 
+
+function listarAplicaron(req, res) {
+    var idOfertasDemandas = req.body.idOfertasDemandas;
+
+    if (!idOfertasDemandas)
+        return res.status(400).send({en: -1, param: 'idOfertasDemandas'});
+    
+
+
+    var SQL_APLICARON = "select p.nombres,p.apellidos,p.telefono,p.email,p.imagen from favorito f inner join bancodt.usuario u on u.idUsuario=f.idUsuario inner join bancodt.persona p on p.id_persona=u.id_persona where idOfertaDemanda = ? and estado=1;";
+
+
+
+    cnf.ejecutarResSQL(SQL_APLICARON, [idOfertasDemandas], function (movmientos) {
+        if (movmientos.length <= 0)
+            return res.status(200).send({en: -1, m: 'Lo sentimos pero no se encuentran postulantes'});
+
+        return res.status(200).send({en: 1, lM: movmientos});
+    }, res);
+
+
+}
 module.exports = router;
