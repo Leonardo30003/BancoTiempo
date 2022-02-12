@@ -16,7 +16,7 @@ function listarDemandas(req, res) {
     var desde = req.body.desde;
     var cuantos = req.body.cuantos;
     var idUsuario = req.body.idUsuario;
-    var misOfertas = req.body.misOfertas;
+    var misDemandas = req.body.misDemandas;
 
     if (!idUsuario)
         return res.status(400).send({en: -1, param: 'idUsuario'});
@@ -25,7 +25,7 @@ function listarDemandas(req, res) {
     if (!cuantos)
         return res.status(400).send({error: 1, param: 'cuantos'});
     var filtro="and od.estado=1 having numPostularon = 0 ";
-    if (misOfertas && misOfertas==1)
+    if (misDemandas && misDemandas==1)
         filtro = "and u.idUsuario= "+idUsuario;
 
 
