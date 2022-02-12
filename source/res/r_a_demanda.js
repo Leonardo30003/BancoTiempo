@@ -29,7 +29,7 @@ function listarDemandas(req, res) {
         filtro = "and u.idUsuario= "+idUsuario;
 
 
-    var SQL_OFERTAS = "SELECT if((select count(*) from bancodt.favorito where idOfertaDemanda=od.idOfertasDemandas and idUsuario=? and estado=1 ) >0,1,0) as isFavorito,(select count(idOfertaDemanda) from favorito where idOfertaDemanda =od.idOfertasDemandas and estado=1) as numPostularon,  if(u.idUsuario=?,0,1) as pagar, od.idOfertasDemandas,od.fecha_creacion ,od.descripcion_actividad,od.titulo,u.idUsuario,u.calificacion, p.nombres, p.apellidos,c.idCategoria,c.categoria,p.email,p.imagen,p.telefono FROM bancodt.ofertas_demandas od  inner join usuario u on od.id_ofertante = u.idUsuario inner join persona p on u.id_persona = p.id_persona inner join categoria c on c.idCategoria= od.idCategoria where od.tipo=2 "+filtro+" order by isFavorito desc,od.fecha_creacion  desc LIMIT ?, ?;";
+    var SQL_OFERTAS = "SELECT if((select count(*) from bancodt.favorito where idOfertaDemanda=od.idOfertasDemandas and idUsuario=? and estado=1 ) >0,1,0) as isFavorito,(select count(idOfertaDemanda) from favorito where idOfertaDemanda =od.idOfertasDemandas and estado=1) as numPostularon,  if(u.idUsuario=?,0,1) as pagar, od.idOfertasDemandas,od.fecha_creacion ,od.descripcion_actividad,od.titulo,u.idUsuario,u.calificacion, p.nombres, p.apellidos,c.idCategoria,c.categoria,p.email,p.imagen,p.telefono FROM bancodt.ofertas_demandas od  inner join usuario u on od.id_ofertante = u.idUsuario inner join persona p on u.id_persona = p.id_persona inner join categoria c on c.idCategoria= od.idCategoria where od.tipo=2 and numPostularon = 0 "+filtro+"  order by isFavorito desc,od.fecha_creacion  desc LIMIT ?, ?;";
 
 
 
@@ -139,7 +139,7 @@ function actualizarTicket(req, res) {
         if (movimiento['affectedRows'] <= 0)
             return res.status(200).send({en: -1, m: 'Lo sentimos, por favor intenta de nuevo más tarde.'});
 
-        return res.status(200).send({en: 1, m: 'Oferta actualizada correctamente.'});
+        return res.status(200).send({en: 1, m: 'Registro actualizado correctamente.'});
 
     }, res);
 
