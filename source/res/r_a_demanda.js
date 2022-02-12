@@ -24,7 +24,7 @@ function listarDemandas(req, res) {
         return res.status(400).send({error: 1, param: 'desde'});
     if (!cuantos)
         return res.status(400).send({error: 1, param: 'cuantos'});
-    var filtro="and od.estado=1 having numPostularon = 0 ";
+    var filtro="and od.estado=1 having (numPostularon = 0 or isFavorito =1)  ";
     if (misDemandas && misDemandas==1)
         filtro = "and u.idUsuario= "+idUsuario;
 
