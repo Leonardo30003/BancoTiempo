@@ -66,7 +66,7 @@ function registrarFavorito(req, res) {
         cnf.ejecutarResSQL(SQL_EXISTE, [idOfertaDemanda], function (antena) {
             if (antena.length > 0)
                 return res.status(200).send({en: -1, m: 'Lo sentimos la demandaa ya fue aplicada'});
-            cnf.ejecutarResSQL(SQL_INSERT_TICKET, [idUsuario, idOfertaDemanda, estado, estado], function (ofertas_demandas) {
+            cnf.ejecutarResSQL(SQL_INSERT_FAV, [idUsuario, idOfertaDemanda, estado, estado], function (ofertas_demandas) {
                 console.log(ofertas_demandas);
                 if (ofertas_demandas['affectedRows'] <= 0)
                     return res.status(200).send({en: -1, m: 'Lo sentimos, por favor intenta de nuevo más tarde.'});
@@ -75,7 +75,7 @@ function registrarFavorito(req, res) {
             }, res);
         }, res);
     else
-        cnf.ejecutarResSQL(SQL_INSERT_TICKET, [idUsuario, idOfertaDemanda, estado, estado], function (ofertas_demandas) {
+        cnf.ejecutarResSQL(SQL_INSERT_FAV, [idUsuario, idOfertaDemanda, estado, estado], function (ofertas_demandas) {
             if (ofertas_demandas['affectedRows'] <= 0)
                 return res.status(200).send({en: -1, m: 'Lo sentimos, por favor intenta de nuevo más tarde.'});
 
@@ -86,7 +86,7 @@ function registrarFavorito(req, res) {
 const SQL_EXISTE =
         "SELECT idUsuario FROM bancodt.favorito where idOfertaDemanda=? and estado = 1";
 
-var SQL_INSERT_TICKET = "INSERT INTO bancodt.favorito (idUsuario, idOfertaDemanda, estado) VALUES(?, ?, ?) ON DUPLICATE KEY UPDATE estado=?";
+var SQL_INSERT_FAV = "INSERT INTO bancodt.favorito (idUsuario, idOfertaDemanda, estado) VALUES(?, ?, ?) ON DUPLICATE KEY UPDATE estado=?";
 
 router.post('/registrar/', function (req, res) {
     var version = req.headers.version;
@@ -111,7 +111,7 @@ function registrarDemanda(req, res) {
         return res.status(400).send({en: -1, param: 'idUsuario'});
 
 
-    cnf.ejecutarResSQL(SQL_INSERT_TICKET, [descripcionActividad, idCategoria, idUsuario, titulo], function (ofertas_demandas) {
+    cnf.ejecutarResSQL(SQL_INSERT_DEMANDA, [descripcionActividad, idCategoria, idUsuario, titulo], function (ofertas_demandas) {
         if (ofertas_demandas['insertId'] <= 0)
             return res.status(200).send({en: -1, m: 'Lo sentimos, por favor intenta de nuevo más tarde.'});
 
@@ -119,7 +119,7 @@ function registrarDemanda(req, res) {
     }, res);
 }
 
-var SQL_INSERT_TICKET = "INSERT INTO bancodt.ofertas_demandas ( descripcion_actividad, idCategoria, id_ofertante, titulo,tipo) VALUES ( ?, ?, ?,?,2)";
+var SQL_INSERT_DEMANDA = "INSERT INTO bancodt.ofertas_demandas ( descripcion_actividad, idCategoria, id_ofertante, titulo,tipo) VALUES ( ?, ?, ?,?,2)";
 
 router.post('/editar/', function (req, res) {
     var version = req.headers.version;
