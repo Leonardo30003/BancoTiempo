@@ -70,7 +70,7 @@ function registrarFavorito(req, res) {
                 if (ofertas_demandas['affectedRows'] <= 0)
                     return res.status(200).send({en: -1, m: 'Lo sentimos, por favor intenta de nuevo más tarde.'});
 
-                return res.status(200).send({en: 1, m: 'Registro realizado correctamente'});
+                return res.status(200).send({en: 1, m: 'Registro realizado correctamente.'});
             }, res);
         }, res);
     else
