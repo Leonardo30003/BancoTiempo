@@ -54,7 +54,26 @@ function listarCategorias(req, res) {
 
 
 const SQL_CATEGORIAS =
-        "SELECT idCategoria,categoria,logo FROM bancodt.categoria where habilitado=1";
+        "SELECT * FROM bancodt.categoria where idCategoria in (SELECT idCategoria FROM bancodt.ofertas_demandas where tipo=1 and estado = 1 group by idCategoria)";
 
+router.post('/listar_demandas/', function (req, res) {
+    var version = req.headers.version;
+    if (version === '1.0.0')
+        return listarCategoriasDemandas(req, res);
+    return res.status(320).send({m: MENSAJE_DEPRECATE});
+});
+
+function listarCategoriasDemandas(req, res) {
+
+    cnf.ejecutarResSQL(SQL_CATEGORIAS2, [], function (lugar) {
+        if (lugar.length <= 0)
+            return res.status(200).send({en: -1, m: 'No Existen Categorias.'});
+        return res.status(200).send({en: 1, t: lugar.length, ls: lugar});
+    }, res);
+}
+
+
+const SQL_CATEGORIAS2 =
+        "SELECT * FROM bancodt.categoria where idCategoria in (SELECT idCategoria FROM bancodt.ofertas_demandas where tipo=2 and estado = 1 group by idCategoria)";
 
 module.exports = router;
