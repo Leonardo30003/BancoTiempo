@@ -24,12 +24,12 @@ function listarDemandas(req, res) {
         return res.status(400).send({error: 1, param: 'desde'});
     if (!cuantos)
         return res.status(400).send({error: 1, param: 'cuantos'});
-    var filtro="and od.estado=1";
+    var filtro="and od.estado=1 having numPostularon = 0 ";
     if (misOfertas && misOfertas==1)
         filtro = "and u.idUsuario= "+idUsuario;
 
 
-    var SQL_OFERTAS = "SELECT if((select count(*) from bancodt.favorito where idOfertaDemanda=od.idOfertasDemandas and idUsuario=? and estado=1 ) >0,1,0) as isFavorito,(select count(idOfertaDemanda) from favorito where idOfertaDemanda =od.idOfertasDemandas and estado=1) as numPostularon,  if(u.idUsuario=?,0,1) as pagar, od.idOfertasDemandas,od.fecha_creacion ,od.descripcion_actividad,od.titulo,u.idUsuario,u.calificacion, p.nombres, p.apellidos,c.idCategoria,c.categoria,p.email,p.imagen,p.telefono FROM bancodt.ofertas_demandas od  inner join usuario u on od.id_ofertante = u.idUsuario inner join persona p on u.id_persona = p.id_persona inner join categoria c on c.idCategoria= od.idCategoria where od.tipo=2  "+filtro+" having numPostularon = 0 order by isFavorito desc,od.fecha_creacion  desc LIMIT ?, ?;";
+    var SQL_OFERTAS = "SELECT if((select count(*) from bancodt.favorito where idOfertaDemanda=od.idOfertasDemandas and idUsuario=? and estado=1 ) >0,1,0) as isFavorito,(select count(idOfertaDemanda) from favorito where idOfertaDemanda =od.idOfertasDemandas and estado=1) as numPostularon,  if(u.idUsuario=?,0,1) as pagar, od.idOfertasDemandas,od.fecha_creacion ,od.descripcion_actividad,od.titulo,u.idUsuario,u.calificacion, p.nombres, p.apellidos,c.idCategoria,c.categoria,p.email,p.imagen,p.telefono FROM bancodt.ofertas_demandas od  inner join usuario u on od.id_ofertante = u.idUsuario inner join persona p on u.id_persona = p.id_persona inner join categoria c on c.idCategoria= od.idCategoria where od.tipo=2  "+filtro+" order by isFavorito desc,od.fecha_creacion  desc LIMIT ?, ?;";
 
 
 
