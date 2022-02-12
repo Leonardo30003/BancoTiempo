@@ -66,6 +66,9 @@ function registrarFavorito(req, res) {
         cnf.ejecutarResSQL(SQL_EXISTE, [idOfertaDemanda], function (antena) {
             if (antena.length > 0)
                 return res.status(200).send({en: -1, m: 'Lo sentimos la demandaa ya fue aplicada'});
+            console.log(idUsuario)
+            console.log(idOfertaDemanda)
+            console.log(estado)
             cnf.ejecutarResSQL(SQL_INSERT_TICKET, [idUsuario, idOfertaDemanda, estado, estado], function (ofertas_demandas) {
                 if (ofertas_demandas['affectedRows'] <= 0)
                     return res.status(200).send({en: -1, m: 'Lo sentimos, por favor intenta de nuevo más tarde.'});
