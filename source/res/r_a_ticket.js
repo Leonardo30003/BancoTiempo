@@ -138,7 +138,7 @@ function actualizarTicket(req, res) {
 
 }
 
-var SQL_UPDATE_ADICIONAL = "UPDATE bancodt.ofertas_demandas SET titulo=?, descripcion_actividad=?, idCategoria=?, estado=? WHERE idOfertasDemandas=? and tipo = 2;";
+var SQL_UPDATE_ADICIONAL = "UPDATE bancodt.ofertas_demandas SET titulo=?, descripcion_actividad=?, idCategoria=?, estado=? WHERE idOfertasDemandas=? and tipo = 1;";
 
 
 
