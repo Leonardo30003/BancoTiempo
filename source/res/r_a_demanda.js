@@ -162,4 +162,32 @@ function actualizarTicket(req, res) {
 
 var SQL_UPDATE_ADICIONAL = "UPDATE bancodt.ofertas_demandas SET titulo=?, descripcion_actividad=?, idCategoria=?, estado=? WHERE idOfertasDemandas=? and tipo = 2;";
 
+router.post('/quitar_postulante/', function (req, res) {
+    var version = req.headers.version;
+    if (version === '1.0.0')
+        return quitarFavorito(req, res);
+    return res.status(320).send({m: MENSAJE_DEPRECATE});
+});
+
+function quitarFavorito(req, res) {
+    var idOfertaDemanda = req.body.idOfertaDemanda;
+      if (!idOfertaDemanda)
+        return res.status(400).send({en: -1, param: 'idOfertasDemandas'});
+
+
+
+    if (!idOfertaDemanda)
+        return res.status(400).send({en: -1, param: 'idOfertaDemanda'});
+    cnf.ejecutarResSQL(SQL_QUITAR_FAV, [idOfertaDemanda], function (ofertas_demandas) {
+        if (ofertas_demandas['affectedRows'] <= 0)
+            return res.status(200).send({en: -1, m: 'Lo sentimos, por favor intenta de nuevo más tarde.'});
+
+        return res.status(200).send({en: 1, m: 'Registro realizado correctamente'});
+    }, res);
+
+}
+
+var SQL_QUITAR_FAV = "UPDATE bancodt.favorito SET estado=0 WHERE idOfertaDemanda='56'";
+
+
 module.exports = router;
