@@ -54,7 +54,7 @@ function listarCategorias(req, res) {
 
 
 const SQL_CATEGORIAS =
-        "SELECT idCategoria,categoria,logo,descripcion FROM bancodt.categoria where idCategoria in (SELECT idCategoria FROM bancodt.ofertas_demandas where tipo=1 and estado = 1 group by idCategoria)";
+        "SELECT idCategoria,categoria,logo,descripcion FROM bancodt.categoria where idCategoria=0 or idCategoria in (SELECT idCategoria FROM bancodt.ofertas_demandas where tipo=1 and estado = 1 group by idCategoria)";
 
 router.post('/listar-todas/', function (req, res) {
     var version = req.headers.version;
@@ -74,7 +74,7 @@ function listarCategoriasTodas(req, res) {
 
 
 const SQL_CATEGORIAS3 =
-        "SELECT idCategoria,categoria,logo,descripcion FROM bancodt.categoria where habilitado = 1";
+        "SELECT idCategoria,categoria,logo,descripcion FROM bancodt.categoria where habilitado = 1 and idCategoria>0";
 
 router.post('/listar_demandas/', function (req, res) {
     var version = req.headers.version;
@@ -94,6 +94,6 @@ function listarCategoriasDemandas(req, res) {
 
 
 const SQL_CATEGORIAS2 =
-        "SELECT idCategoria,categoria,logo,descripcion FROM bancodt.categoria where idCategoria in (SELECT idCategoria FROM bancodt.ofertas_demandas where tipo=2 and estado = 1 group by idCategoria)";
+        "SELECT idCategoria,categoria,logo,descripcion FROM bancodt.categoria where idCategoria=0 or idCategoria in (SELECT idCategoria FROM bancodt.ofertas_demandas where tipo=2 and estado = 1 group by idCategoria)";
 
 module.exports = router;
