@@ -90,7 +90,7 @@ function listarAplicaron(req, res) {
     
 
 
-    var SQL_APLICARON = "select p.nombres,p.apellidos,p.telefono,p.email,p.imagen from favorito f inner join bancodt.usuario u on u.idUsuario=f.idUsuario inner join bancodt.persona p on p.id_persona=u.id_persona where idOfertaDemanda = ? and estado=1;";
+    var SQL_APLICARON = "select p.nombres,p.apellidos,p.telefono,p.email,p.imagen,u.idUsuario from favorito f inner join bancodt.usuario u on u.idUsuario=f.idUsuario inner join bancodt.persona p on p.id_persona=u.id_persona where idOfertaDemanda = ? and estado=1;";
 
 
 
