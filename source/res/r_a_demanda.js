@@ -187,7 +187,7 @@ function quitarFavorito(req, res) {
 
 }
 
-var SQL_QUITAR_FAV = "UPDATE bancodt.favorito SET estado=0 WHERE idOfertaDemanda='56'";
+var SQL_QUITAR_FAV = "UPDATE bancodt.favorito SET estado=0 WHERE idOfertaDemanda=?";
 
 
 module.exports = router;
