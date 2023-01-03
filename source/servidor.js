@@ -69,13 +69,11 @@ configuraciones.on(function (activar) {
             app.use(require('./r_a_demanda'));
             app.get('/', function (req, res) {
                 res.status(200).send({
-                    EC: 'ECUADOR',
+                    COUNTRY: 'ECUADOR',
                     ENVIRONMENT: IS_DESARROLLO,
-                    IDENTIFICADOR: ID_APP,
                     VERSION: VERSION,
-                    BY: 'kradac',
-                    PROJECT: 'Banco del Tiempo',
-                    ARCHITECT: ''
+                    BY: 'Luis Morocho',
+                    PROJECT: 'Banco del Tiempo DWM-UTE',
                 });
             });
             app.use(express.static(__dirname + '/public'));
