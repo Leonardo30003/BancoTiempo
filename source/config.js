@@ -10,7 +10,8 @@ var mysqlPass;
 if (IS_DESARROLLO) {
     mysqlHost = '169.62.217.189';
     mysqlUser = 'LfIGfI4Nhv!SmhGU3';
-    mysqlPass = 'hGfIU3hGfI7ZGrNhfI4342Gfn8LGfIUHg%mhG65Sl3N';
+    mysqlPass = 'nAL-jC2He6.PxyAjch67NMjFkum.KB8eWg4C*F';
+    //mysqlPass = 'hGfIU3hGfI7ZGrNhfI4342Gfn8LGfIUHg%mhG65Sl3N';
 } else {
     if (ID_APP === ID_APP_CLIPP) {
         mysqlHost = '10.73.211.219';
