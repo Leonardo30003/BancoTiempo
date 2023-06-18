@@ -8,19 +8,11 @@ var mysqlUser;
 var mysqlPass;
 
 if (IS_DESARROLLO) {
-    mysqlHost = '169.62.217.189';
-    mysqlUser = 'LfIGfI4Nhv!SmhGU3';
-    mysqlPass = 'nAL-jC2He6.PxyAjch67NMjFkum.KB8eWg4C*F';
+    mysqlHost = '167.99.191.140';
+    mysqlUser = 'bancodtuser';
+    mysqlPass = 'fq9!4R!G6feHJ^8x';
     //mysqlPass = 'hGfIU3hGfI7ZGrNhfI4342Gfn8LGfIUHg%mhG65Sl3N';
-} else {
-    if (ID_APP === ID_APP_CLIPP) {
-        mysqlHost = '10.73.211.219';
-        mysqlUser = 'ServerMaster';
-        mysqlPass = 'Ahg%14!jkhGh7Ha7*(7agiG&*A^*&tgG*A&Tyuf';
-    } else {
-        throw "ERROR NO SE SELECCIONO UNA BASE DE DATOS POR APP CONFIG";
-    }
-}
+} 
 
 var mysqlStringKtaxiDB = {host: mysqlHost, user: mysqlUser, password: mysqlPass, port: mysqlPort, multipleStatements: false, charset: 'utf8mb4'};
 
