@@ -18,6 +18,8 @@ let TOKEN_SIDER = (process.argv[7] ? process.argv[7] : 'LKJjhKJHBJHGjgVJHGHGvjhg
 //if (LLAVE_ECRIP === 'LKJjhKJHBJHGjgVJHGHGvjhgvjhg67431Hj')
 //    throw "ERROR PARAMETROS ENVIADOS INCORRECTOS LLAVE_ECRIP";
 
+
+
 global._BD_;
 global._BDH_;
 ID_APP = 1;
