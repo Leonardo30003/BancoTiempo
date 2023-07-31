@@ -5,9 +5,9 @@ const expressip = require('express-ip');
 global.VERSION = '0.0.1';
 global.MOMENT = require('moment-timezone');
 
-global.IS_DESARROLLO = (process.argv[2] ? (process.argv[2] === 'true') : false);
+global.IS_DESARROLLO = true;
 global.IP_SERVIDOR_NODE = (process.argv[3] ? process.argv[3] : '-.-.-.-');
-global.PORT_SERVER_HTTP = (process.argv[4] ? parseInt(process.argv[4]) : -1);
+global.PORT_SERVER_HTTP = 3001;
 global.PORT_REDIS = (process.argv[5] ? parseInt(process.argv[5]) : -1);
 global.HOST_REDIS = (process.argv[6] ? process.argv[6] : '-.-.-.-');
 let TOKEN_SIDER = (process.argv[7] ? process.argv[7] : 'LKJjhKJHBJHGjgVJHGHGvjhgvjhg67431Hj');

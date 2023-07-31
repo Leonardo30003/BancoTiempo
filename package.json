@@ -17,6 +17,7 @@
         "express-ip": "1.0.3",
         "google-url": "0.0.4",
         "install": "^0.13.0",
+        "jsmin": "^1.0.1",
         "md5": "2.2.1",
         "moment-timezone": "0.5.23",
         "mongo-uri": "0.1.2",
