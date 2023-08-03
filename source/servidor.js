@@ -42,7 +42,7 @@ var http = require('http');
 
 var configuraciones = require('./config.js');
 //var monitoreador = require('./monitoreador');
-var IO = require('socket.io-client');
+//var IO = require('socket.io-client');
 //var configuraciones_mongo = require('./config_mongo.js');
 
 configuraciones.on(function (activar) {
