@@ -4,6 +4,8 @@ require('./VAR_APP.js');
 const expressip = require('express-ip');
 global.VERSION = '0.0.1';
 global.MOMENT = require('moment-timezone');
+var cors = require('cors')
+
 
 global.IS_DESARROLLO = true;
 global.IP_SERVIDOR_NODE = (process.argv[3] ? process.argv[3] : '-.-.-.-');
@@ -63,6 +65,7 @@ configuraciones.on(function (activar) {
                 parameterLimit: 50
             }));
             app.use(bodyParser.json());
+            app.use(cors())
             app.use(require('./r_a_espacios'));
             app.use(require('./r_a_ticket'));
             app.use(require('./r_a_categoria'));
@@ -75,7 +78,7 @@ configuraciones.on(function (activar) {
                     ENVIRONMENT: IS_DESARROLLO,
                     VERSION: VERSION,
                     BY: 'Luis Morocho',
-                    PROJECT: 'Banco del Tiempo DWM-UTE',
+                    PROJECT: 'Banco del Tiempo ',
                 });
             });
             app.use(express.static(__dirname + '/public'));
